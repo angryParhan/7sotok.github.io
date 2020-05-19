@@ -61,22 +61,36 @@
     .items-wrapper li {
       cursor: pointer;
       position: relative;
+
+
+
       &::before {
         content: '';
+        width: 20px;
+        height: 2px;
         position: absolute;
-        width: 4px;
-        height: 20px;
-        color: green;
-        display: block;
+        background: $baseGreen;
+        top: -7px;
+        display: none;
       }
+
       &:hover {
         color: $baseGreen;
-        border-color: $baseGreen;
-        transition: border-bottom-color 1s;
+        transition: color 500ms ease;
       }
 
+      &:hover:before {
+        display: block;
+        transition: all 2s ease;
+      }
 
     }
+
+    .items-wrapper li:hover li:before {
+      background: red;
+    }
+
+
 
     .items-wrapper li:not(.last) {
       margin-right: 70px;
@@ -93,6 +107,16 @@
     .callback-phone {
       position: relative;
       cursor: pointer;
+
+      &:before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background-image: url("../assets/images/svg/phone-icon.svg");
+        display: block;
+        position: absolute;
+        left: -30px;
+      }
 
       .phone__description {
         position: absolute;
