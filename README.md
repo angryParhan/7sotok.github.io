@@ -1,0 +1,1 @@
+# 7sotok.github.io
