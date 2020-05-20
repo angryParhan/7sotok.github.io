@@ -86,9 +86,6 @@
 
     }
 
-    .items-wrapper li:hover li:before {
-      background: red;
-    }
 
 
 
@@ -118,6 +115,46 @@
         left: -30px;
       }
 
+      @keyframes drag {
+        10%  {
+          transform: rotate(-10deg);
+        }
+        20% {
+          transform: rotate(10deg);
+        }
+        30% {
+          transform: rotate(-10deg);
+        }
+        40% {
+          transform: rotate(10deg);
+        }
+        50% {
+          transform: rotate(-10deg);
+        }
+        60% {
+           transform: rotate(10deg);
+         }
+        70% {
+          transform: rotate(-10deg);
+        }
+        80% {
+          transform: rotate(10deg);
+        }
+        90% {
+          transform: rotate(-10deg);
+        }
+        100% {
+          transform: rotate(10deg);
+        }
+      }
+
+      &:hover:before {
+        -webkit-animation-name: drag;
+        -webkit-animation-duration: 500ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+      }
+
       .phone__description {
         position: absolute;
         color: $baseGreen;
@@ -128,6 +165,8 @@
         };
       }
     }
+
+
 
   }
 </style>
