@@ -8,6 +8,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
+    meta: { transition: 'overlay-left' },
     component: Home
   },
   {
