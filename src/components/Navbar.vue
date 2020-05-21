@@ -307,6 +307,13 @@
     .nav__right-block-slide li  {
       padding: 35px;
       text-align: left;
+      margin-bottom: 10%;
+      font-weight: bold;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
     }
 
     .nav__right-block-slide ul {
