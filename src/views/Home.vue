@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import GretingsPart from '@/components/GretingsPart.vue'
+import GretingsPart from '@/components/HomePage.vue'
 
 export default {
   name: 'Home',

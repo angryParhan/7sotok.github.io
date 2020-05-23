@@ -15,8 +15,13 @@
           </div>
         </div>
         <div class="nav__item-second">
-          <p class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Замовити дзвінок</span></p>
-          <img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback">
+          <div class="basket-wrapper">
+            <picture :class="{'basket-active' : basketActive}" :data-basketItems="2">
+              <img src="../assets/images/svg/basket.svg" alt="" class="basket active" @click="basketActive = !basketActive">
+            </picture>
+          </div>
+          <a href="tel:+380994007301" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Замовити дзвінок</span></a>
+          <a href="tel:+380994007301"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
           <img src="../assets/images/svg/navBar-mobile.svg" alt="" class="navbar__mobile" @click="showXSmenu">
         </div>
       </nav>
@@ -27,7 +32,7 @@
               v-if="XSmenuDone"
         />
       </transition>
-      <Animated enter="slideInRight" leave="slideOutRight" duration="600">
+      <Animated enter="slideInRight" leave="slideOutRight" duration="300">
         <div class="nav__right-block-slide" v-if="XSmenu">
           <img src="../assets/images/svg/close-btn.svg" class="close-btn" alt="" @click="closeMenu">
           <ul>
@@ -49,8 +54,11 @@
     data () {
       return {
         XSmenu: false,
-        XSmenuDone: false
+        XSmenuDone: false,
+        basketActive: false
       }
+    },
+    mounted () {
     },
     methods: {
       logoRedirect () {
@@ -64,7 +72,7 @@
         this.XSmenu = false
         setTimeout(() => {
           this.XSmenuDone = false
-        }, 400)
+        }, 100)
       }
     }
   }
@@ -159,11 +167,14 @@
 
     .nav__item-second {
       margin-top: 24px;
+      position: relative;
     }
 
     .callback-phone {
       position: relative;
       cursor: pointer;
+      text-decoration: none;
+      color: #22283D;
 
       &:before {
         content: '';
@@ -280,6 +291,7 @@
       display: block;
       left: -50px;
       top: -1px;
+      cursor: pointer;
     }
 
 
@@ -305,7 +317,7 @@
     }
 
     .nav__right-block-slide li  {
-      padding: 35px;
+      padding: 30px;
       text-align: left;
       margin-bottom: 10%;
       font-weight: bold;
@@ -328,9 +340,68 @@
       margin-left: 10px;
     }
 
+    .basket-wrapper {
+      left: -115px !important;
+      top: -7px !important;
+    }
+
   }
 
+  $basketSize: 30px;
 
+
+  .basket-wrapper {
+    position: absolute;
+    left: -105px;
+    top: 2px;
+  }
+  .basket {
+    width: $basketSize;
+    height: $basketSize;
+    cursor: pointer;
+    position: relative;
+
+  }
+
+  .basket-active {
+    position: relative;
+
+
+    &:before {
+      box-sizing: border-box;
+      content:  attr(data-basketItems) ;
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      color: white;
+      background: red;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      top: -31px;
+      left: -17px;
+      text-align: center;
+      padding-top: 4px;
+
+    }
+
+    $circleDiametr: 50px;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      font-size: 12px;
+      color: #22283D;
+      width: $circleDiametr;
+      height: $circleDiametr;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      top: -23px;
+      left: -9px;
+      z-index: -1;
+    }
+  }
 
 
 </style>
