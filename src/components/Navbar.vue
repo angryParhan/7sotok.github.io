@@ -6,18 +6,18 @@
           <img src="../assets/images/png/logo.png" alt="logo" class="nav__logo" @click="logoRedirect">
           <div class="logo_items">
             <ul class="items-wrapper">
-              <li class="active">Головна</li>
-              <li>Про нас</li>
-              <li>Товари</li>
-              <li>Оплата і доставка</li>
-              <li class="last">Контакти</li>
+              <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
+              <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
+              <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
+              <router-link to="/delivery-info" tag="li" :class="{active: activeTab === 'Delivery'}">Оплата і доставка</router-link>
+              <router-link to="/contacts" tag="li" class="last" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
             </ul>
           </div>
         </div>
         <div class="nav__item-second">
           <div class="basket-wrapper">
-            <picture :class="{'basket-active' : basketActive}" :data-basketItems="2">
-              <img src="../assets/images/svg/basket.svg" alt="" class="basket active" @click="basketActive = !basketActive">
+            <picture :class="{'basket-active' : busketItems}" :data-basketItems="busketItems">
+              <img src="../assets/images/svg/basket.svg" alt="" class="basket active" >
             </picture>
           </div>
           <a href="tel:+380994007301" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Замовити дзвінок</span></a>
@@ -36,11 +36,11 @@
         <div class="nav__right-block-slide" v-if="XSmenu">
           <img src="../assets/images/svg/close-btn.svg" class="close-btn" alt="" @click="closeMenu">
           <ul>
-            <li>Головна</li>
-            <li>Про нас</li>
-            <li>Товари</li>
-            <li>Оплата і доставка</li>
-            <li>Контакти</li>
+            <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
+            <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
+            <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
+            <router-link to="/delivery-info" tag="li" :class="{active: activeTab === 'Delivery'}">Оплата і доставка</router-link>
+            <router-link to="/contacts" tag="li" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
           </ul>
         </div>
       </Animated>
@@ -55,14 +55,35 @@
       return {
         XSmenu: false,
         XSmenuDone: false,
-        basketActive: false
+        basketActive: false,
+        activeTab: ''
       }
     },
     mounted () {
+      this.activeTab = this.$router.currentRoute.name
+      console.log(this.busketItems)
+
+    },
+    computed: {
+      busketItems () {
+        return this.$store.getters.getBusketItems.length
+      }
+    },
+    watch: {
+      $route (to){
+        this.activeTab = to.name
+        if (this.XSmenu) {
+          setTimeout(() => {
+            this.closeMenu()
+          }, 100)
+        }
+      }
     },
     methods: {
       logoRedirect () {
-
+        if (this.$router.currentRoute.name !== 'Home') {
+          this.$router.push({ name: 'Home'})
+        }
       },
       showXSmenu () {
         this.XSmenuDone = true
@@ -84,6 +105,10 @@
   $logoHeight: 82px;
   $logoWidth: 158px;
   $baseGreen: #3a9978;
+
+  .active {
+    color: $baseGreen;
+  }
 
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
@@ -161,9 +186,7 @@
       white-space: nowrap;
     }
 
-    .active {
-      color: $baseGreen;
-    }
+
 
     .nav__item-second {
       margin-top: 24px;
