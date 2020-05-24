@@ -4,36 +4,40 @@
     <div class="basket-table" v-else>
 
       <table class="table table-head">
-        <tr>
-
-          <th class="source">
+        <tr class="table-title-part">
+          <th class="table-title">
             Назва товару
           </th>
-          <th class="page-uniqueness">
+          <th class="table-quantity">
             Кількість (кг)
           </th>
-          <th class="page-uniqueness">
+          <th class="table-price">
             Ціна (грн/кг)
           </th>
+          <th class="table-empty"></th>
         </tr>
       </table>
       <table class="table table-head">
         <tr v-for="(item, i) in basketItems" :key="i">
-          <td class="index">
+          <td class="title">
             {{ item.title }}
           </td>
-          <td class="source">
+          <td class="quantity">
+            <span class="minus-quantity quantity-btn" @click="minusAction(item.id)">-</span>
             {{ item.quantity }}
+            <span class="plus-quantity quantity-btn" @click="plusAction(item.id)">+</span>
           </td>
-          <td class="page-uniqueness">
+          <td class="price">
             {{ item.price }}
           </td>
-          <td class="last-check">
+          <td class="delete-button">
             <svg @click="deleteItem(item.id)" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="delete-item svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#A8B6C7" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>
           </td>
-
         </tr>
       </table>
+      <div class="total-price-wrapper">
+        <p class="total-price">Разом: {{ totalPrice }} грн</p>
+      </div>
     </div>
 
   </section>
@@ -44,16 +48,44 @@
     name: "Basket",
     data () {
       return {
+        totalPrice: 0
       }
+    },
+    created () {
+      this.totalPriceCount()
     },
     computed: {
       basketItems () {
         return this.$store.getters.getBusketItems
       }
     },
+    watch: {
+      basketItems () {
+        console.log('bum')
+        this.totalPriceCount()
+      }
+    },
     methods: {
       deleteItem (id) {
         this.$store.commit('removeElFromBasket', id)
+      },
+      minusAction (id) {
+        this.$store.commit('minusQuantity', id)
+        this.totalPriceCount()
+      },
+      plusAction (id) {
+        this.$store.commit('plusQuantity', id)
+        this.totalPriceCount()
+
+      },
+      totalPriceCount () {
+        let price = 0
+        for (let item of this.basketItems) {
+          price += item.price * item.quantity
+          console.log('Price', price, 'itemPrice', item.price, 'dd', item.quantity)
+        }
+        this.totalPrice = price
+
       }
     }
   }
@@ -72,6 +104,77 @@
     &:hover path {
       fill: red;
       cursor: pointer;
+    }
+  }
+
+  .basket-table {
+    max-width: 700px;
+    margin: 0 auto;
+
+    .table {
+      width: 100%;
+
+      th, td {
+        padding: 20px;
+      }
+
+      tr:nth-child(2n) {
+        background-color: #F6F8FE;
+      }
+      tr:hover:not(.table-title-part) {
+        background-color: #EAEDF5;
+      }
+
+      .table-title-part {
+        background: #6cc164;
+      }
+
+      .table-title, .title {
+        text-align: left;
+        width: 40%;
+      }
+
+      .table-quantity, .quantity, .table-price, .price {
+        width: 25%;
+      }
+
+      .quantity, .price {
+        text-align: center;
+      }
+
+      .quantity-btn {
+        cursor: pointer;
+        user-select: none;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.05);
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
+
+    }
+  }
+  .total-price-wrapper {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .total-price {
+    border-top: 2px solid #22283D;
+    width: 30%;
+    padding-top: 10px;
+    font-weight: bold;
+  }
+
+  @media all and (max-width: 599px) {
+    .quantity {
+      width: 40% !important;
+    }
+  }
+
+  @media all and (max-width: 599px) {
+    .quantity-btn {
+      padding: 4px!important;
     }
   }
 

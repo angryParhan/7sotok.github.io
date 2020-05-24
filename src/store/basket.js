@@ -1,23 +1,14 @@
+const STORAGE_KEY = 'Basket-storage'
+
 export default {
   state: {
-    basketItems: [
-      {
-        id: 'f331a425',
-        title: 'Семена клевера белого',
-        description: 'Назначение:декорация ландшафта, выращивание на зеленый корм, сено.',
-        price: 299,
-        quantity: 10
-      },
-      {
-        id: 'f334a425',
-        title: 'Семена клевера белого',
-        description: 'Назначение:декорация ландшафта, выращивание на зеленый корм, сено.',
-        price: 19,
-        quantity: 2
-      }
-    ]
+    basketItems: []
   },
   mutations: {
+    setState (state) {
+      state.basketItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || [])
+      console.log('here')
+    },
     addEllToBasket (state, payload) {
       const idx = state.basketItems.findIndex(c => c.id === payload.id)
       if (idx !== -1) {
@@ -26,13 +17,28 @@ export default {
         payload.quantity = 1
         state.basketItems.push(payload)
       }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
     },
     removeElFromBasket (state, payload) {
       const idx = state.basketItems.findIndex(c => c.id === payload)
       state.basketItems.splice(idx, 1)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
 
-      console.log(idx, state.basketItems)
+    },
+    plusQuantity (state, payload) {
+      const idx = state.basketItems.findIndex(c => c.id === payload)
+      state.basketItems[idx].quantity++
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
+
+    },
+    minusQuantity (state, payload) {
+      const idx = state.basketItems.findIndex(c => c.id === payload)
+      if (state.basketItems[idx].quantity > 1) {
+        state.basketItems[idx].quantity--
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
+      }
     }
+
   },
   getters: {
     getBusketItems (state) {

@@ -20,7 +20,9 @@ import navbar from './components/Navbar'
 
   export default {
     name: 'App',
-
+    created () {
+      this.$store.commit('setState')
+    },
     components: {
       navbar
     }
