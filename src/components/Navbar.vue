@@ -349,7 +349,7 @@
     }
 
     .nav__right-block-slide li  {
-      padding: 30px;
+      padding: 12%;
       text-align: left;
       margin-bottom: 10%;
       font-weight: bold;

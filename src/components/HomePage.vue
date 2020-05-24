@@ -6,7 +6,7 @@
           <h1 class="title">Насіння різноманітних рослин для газону фермерства та пасічництва.</h1>
           <span class="delivery">Доставка Новою Поштою по всій Україні.</span>
           <div class="goods-btn-wrapper">
-            <router-link to="/goods" tag="p" class="goods-btn">Детальніше</router-link>
+            <router-link to="/goods" tag="p" class="goods-btn">Перейти до покупок</router-link>
           </div>
         </div>
 
@@ -25,7 +25,6 @@
 export default {
   name: 'HelloWorld',
   methods: {
-
   },
 
   components: {
@@ -91,7 +90,7 @@ export default {
 
     &__bg {
       background-image: url("../assets/images/jpeg/home-pageBg-3.jpg");
-      background-size: 94% 89%;
+      background-size: 100% 100%;
       background-repeat: no-repeat;
       background-position: center right;
     }
@@ -101,6 +100,10 @@ export default {
     .home-page {
       .title-wrapper {
         padding-left: 0;
+      }
+
+      &__bg {
+        background-size: 90% 105%;
       }
 
       &__wrapper {
@@ -122,7 +125,7 @@ export default {
           }
 
           .goods-btn-wrapper {
-            margin-top: 16%;
+            margin-top: 8%;
             text-align: center;
           }
           .goods-btn {

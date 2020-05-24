@@ -40,23 +40,42 @@
       </div>
     </div>
 
+
+    <input type="text" v-model="currentCity">
+
+    <ul class="search-block">
+      <li v-for="(item, i) of filteredCity" :key="i" >
+        {{ item.Description }}
+      </li>
+    </ul>
+
   </section>
 </template>
 
 <script>
+import ApiNovaPochta from 'yz-react-deliveri-newpochta'
+
   export default {
     name: "Basket",
     data () {
       return {
-        totalPrice: 0
+        totalPrice: 0,
+        NavaPoshtaItems: [],
+        currentCity: ''
       }
     },
     created () {
       this.totalPriceCount()
+      this.getDataFromNPApi()
     },
     computed: {
       basketItems () {
         return this.$store.getters.getBusketItems
+      },
+      filteredCity () {
+        return this.NavaPoshtaItems.filter(city => {
+          return city.Description.toLowerCase().indexOf(this.currentCity.toLowerCase()) !== -1
+        })
       }
     },
     watch: {
@@ -66,6 +85,23 @@
       }
     },
     methods: {
+      getDataFromNPApi () {
+        const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
+        const cb = (res) => {
+          this.NavaPoshtaItems = res.data
+          console.log(this.NavaPoshtaItens)
+        }
+
+        const cb1 = (res) => {
+          console.log('city', res)
+        }
+
+        const prop = {"CityRef": "6331d0a6-a953-11e9-b73a-005056b24375"}
+
+        const np = new ApiNovaPochta
+        np.getCities(cb, apiKey)
+        np.getWarehouses(cb1, apiKey, prop);
+      },
       deleteItem (id) {
         this.$store.commit('removeElFromBasket', id)
       },
@@ -92,10 +128,18 @@
 </script>
 
 <style scoped lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
+
+  .search-block {
+    height: 100px;
+    overflow-y: auto;
+  }
+
   .container {
-    padding-top: 60px;
+    padding-top: 30px;
     max-width: 1170px;
     margin: 0 auto;
+    font-family: "Open Sans", Helvetica, arial, sans-serif;
   }
 
   .delete-item {
@@ -108,7 +152,7 @@
   }
 
   .basket-table {
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
 
     .table {
@@ -127,6 +171,7 @@
 
       .table-title-part {
         background: #6cc164;
+        color: #ffffff;
       }
 
       .table-title, .title {
@@ -170,9 +215,20 @@
     .quantity {
       width: 40% !important;
     }
+    .quantity-btn {
+      padding: 8px !important;
+    }
+
+    .total-price {
+      width: 45% !important;
+    }
+
+    .container {
+      padding-top: 20px;
+    }
   }
 
-  @media all and (max-width: 599px) {
+  @media all and (max-width: 340px) {
     .quantity-btn {
       padding: 4px!important;
     }
