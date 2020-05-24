@@ -28,6 +28,9 @@ import navbar from './components/Navbar'
 </script>
 
 <style scoped>
+  #app {
+    margin-top: 142px;
+  }
   .fade-enter-active,
   .fade-leave-active {
     transition-duration: 0.1s;
@@ -37,6 +40,12 @@ import navbar from './components/Navbar'
   .fade-enter,
   .fade-leave-active {
     opacity: 0
+  }
+
+  @media all and (max-width: 599px) {
+    #app {
+      margin-top: 92px;
+    }
   }
 </style>
 

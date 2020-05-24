@@ -16,9 +16,9 @@
         </div>
         <div class="nav__item-second">
           <div class="basket-wrapper">
-            <picture :class="{'basket-active' : busketItems}" :data-basketItems="busketItems">
+            <router-link to="/basket" tag="picture" :class="{'basket-active' : busketItems}" :data-basketItems="busketItems">
               <img src="../assets/images/svg/basket.svg" alt="" class="basket active" >
-            </picture>
+            </router-link>
           </div>
           <a href="tel:+380994007301" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Замовити дзвінок</span></a>
           <a href="tel:+380994007301"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
@@ -106,6 +106,14 @@
   $logoWidth: 158px;
   $baseGreen: #3a9978;
 
+  header {
+    position: fixed;
+    top: 0;
+    background: #ffffff;
+    width: 100%;
+    z-index: 2;
+  }
+
   .active {
     color: $baseGreen;
   }
@@ -126,6 +134,7 @@
     display: none;
   }
   .nav {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     padding: 30px;
@@ -272,7 +281,7 @@
 
   }
 
-  @media all and (max-width: 599px)  {
+  @media all and (max-width: 599px) {
     .callback-phone {
       display: none;
     }

@@ -20,6 +20,7 @@
     <buyPopUp
         v-if="buyPopUpShow"
         @cancel="buyPopUpShow = false"
+        @confirm="goToBasket"
     />
 
   </section>
@@ -51,7 +52,9 @@ import buyPopUp from '../components/buyPopUp'
         this.$store.commit('addEllToBasket', busketItem)
         this.buyPopUpShow = true
         console.log('Busket', this.$store.getters.getBusketItems)
-
+      },
+      goToBasket () {
+        this.$router.push('/basket')
       }
     }
   }
@@ -65,17 +68,23 @@ import buyPopUp from '../components/buyPopUp'
   }
 
   .goods-block {
+    padding-top: 20px;
 
     &__seeds-wrapper {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 20px 20px;
+      grid-gap: 30px 25px;
     }
 
     &__item-card {
       height: 300px;
       border: 1px solid #22283D;
 
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: transform 0.5s ease;
+      }
 
     }
 
@@ -88,6 +97,9 @@ import buyPopUp from '../components/buyPopUp'
       &__seeds-wrapper {
         grid-template-columns: 1fr;
       }
+    }
+    .container {
+      padding: 10px;
     }
   }
 

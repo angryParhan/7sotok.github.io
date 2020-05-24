@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Goods from '../views/Goods'
+import Basket from '../views/Basket'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ Vue.use(VueRouter)
     path: '/goods',
     name: 'Goods',
     component: Goods
+  },
+  {
+    path: '/basket',
+    name: 'Basket',
+    component: Basket
   }
 ]
 
