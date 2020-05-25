@@ -43,8 +43,14 @@
 
     <input type="text" v-model="currentCity">
 
-    <ul class="search-block">
-      <li v-for="(item, i) of filteredCity" :key="i" >
+    <ul class="search-block" v-if="showNav">
+      <li v-for="(item, i) of filteredCity" :key="i" class="cityItem" @click="selectAction(item)">
+        {{ item.Description }}
+      </li>
+    </ul>
+
+    <ul class="search-block" v-if="showNa1">
+      <li v-for="(item, i) of NovaPoshtaPostOffices" :key="i" class="cityItem" >
         {{ item.Description }}
       </li>
     </ul>
@@ -61,7 +67,10 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
       return {
         totalPrice: 0,
         NavaPoshtaItems: [],
-        currentCity: ''
+        currentCity: '',
+        showNav: true,
+        showNa1: false,
+        NovaPoshtaPostOffices: []
       }
     },
     created () {
@@ -82,6 +91,10 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
       basketItems () {
         console.log('bum')
         this.totalPriceCount()
+      },
+      currentCity () {
+        this.showNav = true
+        this.showNa1 = false
       }
     },
     methods: {
@@ -89,18 +102,24 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
         const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
         const cb = (res) => {
           this.NavaPoshtaItems = res.data
-          console.log(this.NavaPoshtaItens)
+          console.log(this.NavaPoshtaItems)
         }
-
-        const cb1 = (res) => {
-          console.log('city', res)
-        }
-
-        const prop = {"CityRef": "6331d0a6-a953-11e9-b73a-005056b24375"}
 
         const np = new ApiNovaPochta
         np.getCities(cb, apiKey)
-        np.getWarehouses(cb1, apiKey, prop);
+
+      },
+      getPostOffices (hash) {
+        const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
+        const cb = (res) => {
+          console.log('city', res)
+          this.NovaPoshtaPostOffices = res.data
+        }
+
+        const prop = {"CityRef": hash}
+        const np = new ApiNovaPochta
+
+        np.getWarehouses(cb, apiKey, prop);
       },
       deleteItem (id) {
         this.$store.commit('removeElFromBasket', id)
@@ -122,8 +141,16 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
         }
         this.totalPrice = price
 
+      },
+      selectAction (city) {
+        this.showNav = false
+        this.showNa1 = true
+        this.currentCity = city.Description
+        this.getPostOffices(city.Ref)
+
       }
-    }
+    },
+
   }
 </script>
 
@@ -131,8 +158,16 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
 
   .search-block {
-    height: 100px;
+    height: 200px;
     overflow-y: auto;
+  }
+
+  .cityItem {
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+      background: #EAEDF5;
+    }
   }
 
   .container {
