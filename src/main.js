@@ -3,7 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueAnimated from '@codekraft-studio/vue-animated'
+import VueMask from 'v-mask'
 
+
+Vue.use(VueMask)
 Vue.use(VueAnimated)
 
 import 'normalize.css'

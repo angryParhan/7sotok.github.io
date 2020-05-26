@@ -47,14 +47,17 @@
       <div class="form-item input-item">
         <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name">
         <label>ПІБ</label>
-
+      </div>
+      <div class="form-item input-item">
+        <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (0##) ###-##-##'">
+        <label>Телефон</label>
       </div>
       <div class="form-item input-item" v-click-outside="hideDropDawn">
-        <input type="text" name="shipingCity" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true" >
+        <input type="text" name="shiping" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true" autocomplete="off">
         <label>Місто/село</label>
         <div class="dropdown-items" v-if="showDropdawn">
           <ul class="search-block">
-            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)">
+            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
               {{ item.Description }}
             </li>
           </ul>
@@ -64,6 +67,10 @@
         <option disabled selected="selected">Місто доставки</option>
         <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
       </select>
+
+      <div class="goods-btn-wrapper">
+        <p class="goods-btn">Купити</p>
+      </div>
 
 
     </div>
@@ -76,6 +83,8 @@
 <script>
 import ApiNovaPochta from 'yz-react-deliveri-newpochta'
 import ClickOutside from 'vue-click-outside'
+
+
 
   export default {
     name: "Basket",
@@ -95,7 +104,8 @@ import ClickOutside from 'vue-click-outside'
       }
     },
     directives: {
-      ClickOutside
+      ClickOutside,
+
     },
     created () {
       this.totalPriceCount()
@@ -107,11 +117,11 @@ import ClickOutside from 'vue-click-outside'
       },
       filteredCity () {
         return this.NavaPoshtaItems.filter(city => {
-          return city.Description.toLowerCase().indexOf(this.currentCity.toLowerCase()) !== -1
+          return city.Description.toLowerCase().indexOf(this.currentCity.trim().toLowerCase()) !== -1
         })
       },
       sortedCity () {
-        if (this.currentCity.length > 2) {
+        if (this.currentCity.trim().length > 1) {
           return this.filteredCity.sort((a, b) => a.Description.length > b.Description.length ? 1 : -1)
         } else {
           return this.filteredCity
@@ -125,8 +135,9 @@ import ClickOutside from 'vue-click-outside'
         this.totalPriceCount()
       },
       currentCity () {
-        this.showNav = true
-        this.showNa1 = false
+        if (this.NovaPoshtaPostOffices.length > 0) {
+          this.NovaPoshtaPostOffices = []
+        }
       }
     },
     methods: {
@@ -339,6 +350,7 @@ import ClickOutside from 'vue-click-outside'
       border: none;
       border-radius: 0;
       border-bottom: 1px solid #6cc164;
+      line-height: 10px;
     }
 
     .input-item label{
@@ -380,15 +392,35 @@ import ClickOutside from 'vue-click-outside'
 
     .selectPostOffice {
       border: none;
-      border-bottom: 1px solid #6cc164;
+      -webkit-box-shadow: 0px 9px 0px -8px rgba(108,193,100,0.85);
+      -moz-box-shadow: 0px 9px 0px -8px rgba(108,193,100,0.85);
+      box-shadow: 0px 9px 0px -8px rgba(108,193,100,0.85);
       outline: none;
-      border-radius: 0px;
-      -webkit-border-radius: 0px;
       color: #22283D;
     }
 
     .disabled-color {
       color: gray;
+    }
+
+    .goods-btn-wrapper {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .goods-btn {
+      width: 150px;
+      border-radius: 20px;
+      padding: 13px;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 23px;
+      font-size: 12px;
+      background-color: #3bb78f;
+      background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+      color: #ffffff;
+
     }
   }
 
