@@ -41,25 +41,41 @@
     </div>
 
 
-    <input type="text" v-model="currentCity">
+    <h2 class="form-title">Оформлення замовлення</h2>
+    <div class="buy-form">
 
-    <ul class="search-block" v-if="showNav">
-      <li v-for="(item, i) of filteredCity" :key="i" class="cityItem" @click="selectAction(item)">
-        {{ item.Description }}
-      </li>
-    </ul>
+      <div class="form-item input-item">
+        <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name">
+        <label>ПІБ</label>
 
-    <ul class="search-block" v-if="showNa1">
-      <li v-for="(item, i) of NovaPoshtaPostOffices" :key="i" class="cityItem" >
-        {{ item.Description }}
-      </li>
-    </ul>
+      </div>
+      <div class="form-item input-item" v-click-outside="hideDropDawn">
+        <input type="text" name="shipingCity" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true" >
+        <label>Місто/село</label>
+        <div class="dropdown-items" v-if="showDropdawn">
+          <ul class="search-block">
+            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)">
+              {{ item.Description }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <select class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}">
+        <option disabled selected="selected">Місто доставки</option>
+        <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
+      </select>
+
+
+    </div>
+
+
 
   </section>
 </template>
 
 <script>
 import ApiNovaPochta from 'yz-react-deliveri-newpochta'
+import ClickOutside from 'vue-click-outside'
 
   export default {
     name: "Basket",
@@ -68,10 +84,18 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
         totalPrice: 0,
         NavaPoshtaItems: [],
         currentCity: '',
-        showNav: true,
-        showNa1: false,
-        NovaPoshtaPostOffices: []
+        showDropdawn: false,
+        NovaPoshtaPostOffices: [],
+        personalData: {
+          name: '',
+          phone: '',
+          city: '',
+          postOffice: ''
+        }
       }
+    },
+    directives: {
+      ClickOutside
     },
     created () {
       this.totalPriceCount()
@@ -85,6 +109,14 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
         return this.NavaPoshtaItems.filter(city => {
           return city.Description.toLowerCase().indexOf(this.currentCity.toLowerCase()) !== -1
         })
+      },
+      sortedCity () {
+        if (this.currentCity.length > 2) {
+          return this.filteredCity.sort((a, b) => a.Description.length > b.Description.length ? 1 : -1)
+        } else {
+          return this.filteredCity
+        }
+
       }
     },
     watch: {
@@ -143,10 +175,15 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
 
       },
       selectAction (city) {
-        this.showNav = false
-        this.showNa1 = true
+
         this.currentCity = city.Description
+        this.personalData.city = city.Description
         this.getPostOffices(city.Ref)
+        console.log(this.personalData)
+        this.showDropdawn = false
+      },
+      hideDropDawn () {
+        this.showDropdawn = false
 
       }
     },
@@ -157,9 +194,19 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
 <style scoped lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
 
+  input {
+    border: none;
+    outline: none;
+    &:active {
+      outline: none;
+    }
+  }
+
   .search-block {
-    height: 200px;
+    max-height: 150px;
     overflow-y: auto;
+    text-align: left;
+
   }
 
   .cityItem {
@@ -245,6 +292,107 @@ import ApiNovaPochta from 'yz-react-deliveri-newpochta'
     padding-top: 10px;
     font-weight: bold;
   }
+
+  .form-title {
+    text-align: left;
+    margin: 60px 0;
+    color: #22283D;
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  .buy-form {
+
+    height: 800px;
+
+    input {
+      padding-bottom: 5px;
+      padding-left: 5px;
+      color: #22283D;
+    }
+
+    max-width: 700px;
+    padding: 0 50px;
+    margin: 50px auto;
+    text-align: center;
+    & input, & select {
+      background: transparent;
+      width: 100%;
+    }
+
+
+
+    .form-item {
+      margin-bottom: 45px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .input-item input {
+      font-size: 18px;
+      padding: 8px;
+      -webkit-appearance: none;
+      display: block;
+      background: transparent;
+      color: black;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid #6cc164;
+    }
+
+    .input-item label{
+      color: #999;
+      font-size: 18px;
+      font-weight: normal;
+      position: absolute;
+      pointer-events: none;
+      left: 10px;
+      top: 10px;
+      transition: all 0.2s ease-out;
+    }
+
+    input:focus ~ label, input.used ~ label {
+      top: -15px;
+      transform: scale(.85);
+      left: 8px;
+      color: #6cc164;
+    }
+
+
+    .name-title {
+      position: absolute;
+      left: 0;
+      z-index: 0;
+    }
+
+    .name-item:focus .name-title {
+      top: -20px !important;
+      transition: top 0.2s ease-in-out;
+    }
+
+    .dropdown-items {
+      position: absolute;
+      background: #ffffff;
+      width: 100%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .selectPostOffice {
+      border: none;
+      border-bottom: 1px solid #6cc164;
+      outline: none;
+      border-radius: 0px;
+      -webkit-border-radius: 0px;
+      color: #22283D;
+    }
+
+    .disabled-color {
+      color: gray;
+    }
+  }
+
+
 
   @media all and (max-width: 599px) {
     .quantity {

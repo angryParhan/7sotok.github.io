@@ -20,7 +20,7 @@
               <img src="../assets/images/svg/basket.svg" alt="" class="basket active" >
             </router-link>
           </div>
-          <a href="tel:+380994007301" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Замовити дзвінок</span></a>
+          <a href="tel:+380994007301" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Зателефонувати</span></a>
           <a href="tel:+380994007301"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
           <img src="../assets/images/svg/navBar-mobile.svg" alt="" class="navbar__mobile" @click="showXSmenu">
         </div>
