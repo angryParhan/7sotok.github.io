@@ -4,9 +4,10 @@
       <div class="modal-wrapper" @click.self="$emit('cancel')">
         <div class="modal-container">
           <h2 class="message">{{ confirmMessage }}</h2>
+          <img src="../assets/images/svg/addToBasket.svg" alt="" class="successImg">
           <div class="buttons__block">
-            <button class="btn btn_cancel" @click="$emit('cancel')"><  Продовжити вибір товарів</button>
-            <button class="btn btn_confirm" @click="$emit('confirm')">Оформити замовлення</button>
+            <p class="btn btn_cancel" @click="$emit('cancel')">Продовжити вибір товарів</p>
+            <p class="btn btn_confirm" @click="$emit('confirm')">Оформити замовлення</p>
           </div>
         </div>
       </div>
@@ -26,7 +27,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -45,10 +46,11 @@
     align-items: center;
   }
   .modal-container {
+    text-align: center;
     position: relative;
     vertical-align: bottom;
     width: 40%;
-    height: 150px;
+    height: 280px;
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -72,23 +74,64 @@
   .btn {
     margin: 0;
     cursor: pointer;
+    background: white;
+    border: 1px solid #6cc164;
+    padding: 10px;
+
   }
   .btn_cancel {
     border: none;
     outline: none;
     color: #22283D;
     font-size: 12px;
+    position: relative;
+    line-height: 15px;
+    vertical-align: middle;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -10px;
+
+      top: 8px;
+      background-image: url("../assets/images/svg/back.svg");
+      background-repeat: no-repeat;
+      display: block;
+      height: 15px;
+      width: 15px;
+    }
+
   }
   .btn_confirm {
     border-color: green;
     color: green;
   }
-  @media all and (max-width: 390px) {
+
+  .successImg {
+    height: 150px;
+    width: 150px;
+    margin-top: 10px;
+
+
+  }
+  @media all and (max-width: 599px) {
     .modal-container {
-      width: 280px;
+      width: 95%;
+      height: 250px;
     }
     .message {
       font-size: 17px;
+    }
+    .btn {
+      padding: 6px;
+      font-size: 10px;
+    }
+
+    .btn_cancel {
+      &:before {
+        top: 6px;
+        left: -11px;
+      }
     }
   }
   .modal-enter {

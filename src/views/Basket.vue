@@ -42,38 +42,45 @@
 
 
     <h2 class="form-title">Оформлення замовлення</h2>
-    <div class="buy-form">
 
-      <div class="form-item input-item">
-        <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name">
-        <label>ПІБ</label>
-      </div>
-      <div class="form-item input-item">
-        <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (0##) ###-##-##'">
-        <label>Телефон</label>
-      </div>
-      <div class="form-item input-item" v-click-outside="hideDropDawn">
-        <input type="text" name="shiping" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true" autocomplete="off">
-        <label>Місто/село</label>
-        <div class="dropdown-items" v-if="showDropdawn">
-          <ul class="search-block">
-            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
-              {{ item.Description }}
-            </li>
-          </ul>
+    <form action="../../server/mail.php" method="post" >
+      <div class="buy-form">
+
+        <div class="form-item input-item">
+          <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name" required>
+          <label>ПІБ</label>
         </div>
+        <div class="form-item input-item">
+          <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (###) ###-##-##'" required>
+          <label>Телефон</label>
+        </div>
+        <div class="form-item input-item" v-click-outside="hideDropDawn">
+          <input type="search" name="delivery" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true"  required >
+          <label>Місто/село</label>
+          <div class="dropdown-items" v-if="showDropdawn">
+            <ul class="search-block">
+              <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
+                {{ item.Description }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <select name="postOffice" class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}" required>
+          <option disabled :selected="NovaPoshtaPostOffices.length === 0">Віділення Нової пошти</option>
+          <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
+        </select>
+
+        <input type="text" name="basket" :value="basketItems" hidden>
+        <input type="text" name="totalPrice" :value="totalPrice" hidden>
+
+        <div class="goods-btn-wrapper">
+          <button type="submit" class="goods-btn">Купити</button>
+        </div>
+
+
       </div>
-      <select class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}">
-        <option disabled selected="selected">Місто доставки</option>
-        <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
-      </select>
+    </form>
 
-      <div class="goods-btn-wrapper">
-        <p class="goods-btn">Купити</p>
-      </div>
-
-
-    </div>
 
 
 
@@ -110,6 +117,12 @@ import ClickOutside from 'vue-click-outside'
     created () {
       this.totalPriceCount()
       this.getDataFromNPApi()
+    },
+    mounted () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
     },
     computed: {
       basketItems () {
@@ -337,6 +350,7 @@ import ClickOutside from 'vue-click-outside'
       margin-bottom: 45px;
       position: relative;
       z-index: 1;
+      padding-left: 12px;
     }
 
     .input-item input {
@@ -346,7 +360,7 @@ import ClickOutside from 'vue-click-outside'
       display: block;
       background: transparent;
       color: black;
-      width: 100%;
+      width: 98%;
       border: none;
       border-radius: 0;
       border-bottom: 1px solid #6cc164;
@@ -386,7 +400,7 @@ import ClickOutside from 'vue-click-outside'
     .dropdown-items {
       position: absolute;
       background: #ffffff;
-      width: 100%;
+      width: 96%;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
@@ -397,6 +411,7 @@ import ClickOutside from 'vue-click-outside'
       box-shadow: 0px 9px 0px -8px rgba(108,193,100,0.85);
       outline: none;
       color: #22283D;
+      padding: 10px;
     }
 
     .disabled-color {
@@ -420,7 +435,13 @@ import ClickOutside from 'vue-click-outside'
       background-color: #3bb78f;
       background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
       color: #ffffff;
+      border: none;
+      outline: none;
 
+      &:active {
+        border: none;
+        outline: none;
+      }
     }
   }
 
@@ -440,6 +461,9 @@ import ClickOutside from 'vue-click-outside'
 
     .container {
       padding-top: 20px;
+    }
+    .form-title {
+      text-align: center;
     }
   }
 

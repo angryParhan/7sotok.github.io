@@ -3,7 +3,7 @@
     <div class="home-page__wrapper">
       <div class="home-page__item home-page__title">
         <div class="title-wrapper">
-          <h1 class="title">Насіння різноманітних рослин для газону фермерства та пасічництва.</h1>
+          <h1 class="title">Насіння різноманітних рослин для газону, фермерства та пасічництва.</h1>
           <span class="delivery">Доставка Новою Поштою по всій Україні.</span>
           <div class="goods-btn-wrapper">
             <router-link to="/goods" tag="p" class="goods-btn">Перейти до покупок</router-link>

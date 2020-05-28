@@ -8,12 +8,18 @@
             :key="i"
 
         >
-          <p class="title">id: {{ item.id }}</p>
-          <p>{{ item.title }}</p>
-          <p>{{ item.description }}</p>
-          <p>Price: {{ item.price }}</p>
-          <button>Детальніше</button>
-          <button @click="buyAction(item)">Купити</button>
+          <img :src="item.img" alt="" class="product-title-img">
+          <p class="title">{{ item.title }}</p>
+          <p class="description"><span>Призначення:</span> {{ item.description }}</p>
+
+          <div class="btn-price-wrapper">
+            <p class="price"><span class="helper"></span>Ціна: {{ item.price }} грн/кг</p>
+            <div class="btns">
+              <p class="btn btn-more">Детальніше</p>
+              <p class="btn buy-btn" @click="buyAction(item)">Купити</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -62,23 +68,31 @@ import buyPopUp from '../components/buyPopUp'
 
 <style scoped lang="scss">
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital@0;1&display=swap');
+
+
   .container {
-    max-width: 1170px;
+    max-width: 1270px;
     margin: 0 auto;
   }
 
   .goods-block {
-    padding-top: 20px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    color: #22283D;
+    padding-top: 60px;
+    margin-bottom: 100px;
 
     &__seeds-wrapper {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 30px 25px;
+      grid-gap: 70px 115px;
     }
 
     &__item-card {
-      height: 300px;
-      border: 1px solid #22283D;
+      box-shadow: 0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12)!important;
+      border-radius: 4px;
+
 
       &:hover {
         transform: scale(1.03);
@@ -86,6 +100,80 @@ import buyPopUp from '../components/buyPopUp'
         transition: transform 0.5s ease;
       }
 
+    }
+
+    .product-title-img {
+      border-radius: inherit;
+      height: 230px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .btn-price-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .price {
+      flex: 2;
+    }
+
+    .btns {
+      flex: 3;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .btn {
+      padding: 10px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      border-radius: 2px;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    .buy-btn {
+      color: #ffffff;
+      background-color: #3bb78f;
+      background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+      padding: 10px 15px;
+    }
+
+    .btn-more {
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
+    .price {
+      align-self: center;
+      font-weight: bold;
+      line-height: 14px;
+      padding-left: 10px;
+      padding-top: 4px;
+    }
+
+    .helper {
+      height: 100%;
+    }
+
+    .title {
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      padding-left: 10px;
+    }
+
+    .description {
+
+      padding-left: 10px;
+      font-size: 14px;
+      span {
+        font-size: 16px;
+        font-weight: bold;
+      }
     }
 
 
@@ -99,7 +187,7 @@ import buyPopUp from '../components/buyPopUp'
       }
     }
     .container {
-      padding: 10px;
+      padding: 40px 25px;
     }
   }
 
