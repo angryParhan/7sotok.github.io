@@ -15,13 +15,13 @@
           </div>
         </div>
         <div class="nav__item-second">
-          <div class="basket-wrapper">
-            <router-link to="/basket" tag="picture" :class="{'basket-active' : busketItems}" :data-basketItems="busketItems">
+          <div class="basket-wrapper" @click="sendBasketEventToAnalitics">
+            <router-link to="/basket" tag="picture" :class="{'basket-active' : busketItems}" :data-basketItems="busketItems" >
               <img src="../assets/images/svg/basket.svg" alt="" class="basket active" >
             </router-link>
           </div>
-          <a href="tel:+380501909337" class="callback-phone">+38 (050) 190-93-37 <span class="phone__description">Зателефонувати</span></a>
-          <a href="tel:+380994007301"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
+          <a href="tel:+380501909337" class="callback-phone" @click="sendDataToGoogleAnalitics">+38 (050) 190-93-37 <span class="phone__description">Зателефонувати</span></a>
+          <a href="tel:+380994007301" @click="sendDataToGoogleAnalitics"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
           <img src="../assets/images/svg/navBar-mobile.svg" alt="" class="navbar__mobile" @click="showXSmenu">
         </div>
       </nav>
@@ -80,6 +80,21 @@
       }
     },
     methods: {
+      sendBasketEventToAnalitics () {
+        console.log('click')
+        this.$gtag.event('click-navbar-basket-icon', {
+          'event_category': 'basket-icon',
+          'event_label': 'click',
+          'value': 'basket icon triggered!'
+        })
+      },
+      sendDataToGoogleAnalitics () {
+        this.$gtag.event('call-back', {
+          'event_category': 'call-action',
+          'event_label': 'call',
+          'value': 'phone call triggered!'
+        })
+      },
       logoRedirect () {
         if (this.$router.currentRoute.name !== 'Home') {
           this.$router.push({ name: 'Home'})

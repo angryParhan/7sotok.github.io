@@ -179,14 +179,29 @@ import ClickOutside from 'vue-click-outside'
       },
       deleteItem (id) {
         this.$store.commit('removeElFromBasket', id)
+        this.$gtag.event('remove-item-from-basket', {
+          'event_category': 'basket-products-table',
+          'event_label': '- item',
+          'value': id
+        })
       },
       minusAction (id) {
         this.$store.commit('minusQuantity', id)
         this.totalPriceCount()
+        this.$gtag.event('click-minus-quantity', {
+          'event_category': 'basket-products-table',
+          'event_label': '-1 Quantity',
+          'value': id
+        })
       },
       plusAction (id) {
         this.$store.commit('plusQuantity', id)
         this.totalPriceCount()
+        this.$gtag.event('click-plus-quantity', {
+          'event_category': 'basket-products-table',
+          'event_label': '+1 Quantity',
+          'value': id
+        })
 
       },
       totalPriceCount () {

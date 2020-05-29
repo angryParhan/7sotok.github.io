@@ -57,7 +57,11 @@ import buyPopUp from '../components/buyPopUp'
         const busketItem = {...item}
         this.$store.commit('addEllToBasket', busketItem)
         this.buyPopUpShow = true
-        console.log('Busket', this.$store.getters.getBusketItems)
+        this.$gtag.event('click-buy-button', {
+          'event_category': 'add-product-to-basket',
+          'event_label': '+ product',
+          'value': busketItem
+        })
       },
       goToBasket () {
         this.$router.push('/basket')

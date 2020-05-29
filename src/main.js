@@ -4,6 +4,14 @@ import router from './router'
 import store from './store'
 import VueAnimated from '@codekraft-studio/vue-animated'
 import VueMask from 'v-mask'
+import VueGtag from 'vue-gtag'
+
+
+Vue.use(VueGtag, {
+  config: { id: "UA-167925505-1" },
+  appName: '7-sotok',
+  pageTrackerScreenviewEnabled: true
+}, router)
 
 
 Vue.use(VueMask)
