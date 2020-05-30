@@ -1,84 +1,91 @@
 <template>
   <section class="container">
     <p v-if="basketItems.length === 0">Корзина пуста</p>
-    <div class="basket-table" v-else>
+    <template v-else>
+      <div class="basket-table" >
 
-      <table class="table table-head">
-        <tr class="table-title-part">
-          <th class="table-title">
-            Назва товару
-          </th>
-          <th class="table-quantity">
-            Кількість (кг)
-          </th>
-          <th class="table-price">
-            Ціна (грн/кг)
-          </th>
-          <th class="table-empty"></th>
-        </tr>
-      </table>
-      <table class="table table-head">
-        <tr v-for="(item, i) in basketItems" :key="i">
-          <td class="title">
-            {{ item.title }}
-          </td>
-          <td class="quantity">
-            <span class="minus-quantity quantity-btn" @click="minusAction(item.id)">-</span>
-            {{ item.quantity }}
-            <span class="plus-quantity quantity-btn" @click="plusAction(item.id)">+</span>
-          </td>
-          <td class="price">
-            {{ item.price }}
-          </td>
-          <td class="delete-button">
-            <svg @click="deleteItem(item.id)" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="delete-item svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#A8B6C7" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>
-          </td>
-        </tr>
-      </table>
-      <div class="total-price-wrapper">
-        <p class="total-price">Разом: {{ totalPrice }} грн</p>
-      </div>
-    </div>
-
-
-    <h2 class="form-title">Оформлення замовлення</h2>
-
-
-
-    <div class="buy-form">
-      <div class="form-item input-item">
-        <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name" required>
-        <label>ПІБ</label>
-      </div>
-      <div class="form-item input-item">
-        <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (###) ###-##-##'" required>
-        <label>Телефон</label>
-      </div>
-      <div class="form-item input-item" v-click-outside="hideDropDawn">
-        <input type="search" name="delivery" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true"  required >
-        <label>Місто/село</label>
-        <div class="dropdown-items" v-if="showDropdawn">
-          <ul class="search-block">
-            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
-              {{ item.Description }}
-            </li>
-          </ul>
+        <table class="table table-head">
+          <tr class="table-title-part">
+            <th class="table-title">
+              Назва товару
+            </th>
+            <th class="table-quantity">
+              Кількість (кг)
+            </th>
+            <th class="table-price">
+              Ціна (грн/кг)
+            </th>
+            <th class="table-empty"></th>
+          </tr>
+        </table>
+        <table class="table table-head">
+          <tr v-for="(item, i) in basketItems" :key="i">
+            <td class="title">
+              {{ item.title }}
+            </td>
+            <td class="quantity">
+              <span class="minus-quantity quantity-btn" @click="minusAction(item.id)">-</span>
+              {{ item.quantity }}
+              <span class="plus-quantity quantity-btn" @click="plusAction(item.id)">+</span>
+            </td>
+            <td class="price">
+              {{ item.price }}
+            </td>
+            <td class="delete-button">
+              <svg @click="deleteItem(item.id)" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="delete-item svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#A8B6C7" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>
+            </td>
+          </tr>
+        </table>
+        <div class="total-price-wrapper">
+          <p class="total-price">Разом: {{ totalPrice }} грн</p>
         </div>
       </div>
-      <select name="postOffice" v-model="personalData.postOffice" class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}" required>
-        <option disabled :selected="NovaPoshtaPostOffices.length === 0">Віділення Нової пошти</option>
-        <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
-      </select>
 
-      <input type="text" name="basket" :value="basketItems" hidden>
-      <input type="text" name="totalPrice" :value="totalPrice" hidden>
+      <h2 class="form-title">Оформлення замовлення</h2>
 
-      <div class="goods-btn-wrapper">
-        <button class="goods-btn" @click="sendEmailHandler">Купити</button>
+      <div class="buy-form">
+        <div class="form-item input-item">
+          <input class="name-input" :class="{ used: personalData.name.length }" type="text"v-model="personalData.name" @blur="checkName">
+          <label>ПІБ</label>
+          <span class="error-handler name-error" v-if="nameError === true">Введіть ПІБ</span>
+        </div>
+        <div class="form-item input-item">
+          <input :class="{ used: personalData.phone.length }" type="text" v-model="personalData.phone" v-mask="'+38 (###) ###-##-##'" @blur="checkPhone">
+          <label>Телефон</label>
+          <span class="error-handler phone-error" v-if="phoneError === true">Введіть коректний номер телефону</span>
+        </div>
+        <div class="form-item input-item" v-click-outside="hideDropDawn">
+          <input type="search" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true" @blur="checkCity">
+          <label>Місто/село</label>
+          <div class="dropdown-items" v-if="showDropdawn">
+            <ul class="search-block">
+              <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
+                {{ item.Description }}
+              </li>
+            </ul>
+          </div>
+          <span class="error-handler city-error" v-if="cityError === true">Виберіть місто із списку</span>
+        </div>
+        <div class="select-wrapper">
+          <select v-model="personalData.postOffice" class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}" >
+            <option disabled >Віділення Нової пошти</option>
+            <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
+          </select>
+          <span class="error-handler postOffice-error" v-if="postOfficeError === true">Виберіть віділення Нової пошти із списку</span>
+        </div>
+
+
+
+
+
+        <div class="goods-btn-wrapper">
+          <button class="goods-btn" @click="sendEmailHandler">Купити</button>
+        </div>
+
+
       </div>
+    </template>
 
-
-    </div>
 
     <buyPopUp
         v-if="successPopUp"
@@ -118,9 +125,13 @@ import buyPopUp from '../components/buyPopUp'
           name: '',
           phone: '',
           city: '',
-          postOffice: '',
+          postOffice: 'Віділення Нової пошти'
+        },
+        nameError: null,
+        phoneError: null,
+        cityError: null,
+        postOfficeError: null
 
-        }
       }
     },
     directives: {
@@ -162,6 +173,7 @@ import buyPopUp from '../components/buyPopUp'
       currentCity () {
         if (this.NovaPoshtaPostOffices.length > 0) {
           this.NovaPoshtaPostOffices = []
+          this.personalData.postOffice = 'Віділення Нової пошти'
         }
       }
     },
@@ -176,7 +188,6 @@ import buyPopUp from '../components/buyPopUp'
         const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
         const cb = (res) => {
           this.NavaPoshtaItems = res.data
-          console.log(this.NavaPoshtaItems)
         }
 
         const np = new ApiNovaPochta
@@ -186,7 +197,6 @@ import buyPopUp from '../components/buyPopUp'
       getPostOffices (hash) {
         const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
         const cb = (res) => {
-          console.log('city', res)
           this.NovaPoshtaPostOffices = res.data
         }
 
@@ -226,24 +236,31 @@ import buyPopUp from '../components/buyPopUp'
         let price = 0
         for (let item of this.basketItems) {
           price += item.price * item.quantity
-          console.log('Price', price, 'itemPrice', item.price, 'dd', item.quantity)
         }
         this.totalPrice = price
 
       },
       selectAction (city) {
-
+        this.cityError = false
         this.currentCity = city.Description
         this.personalData.city = city.Description
         this.getPostOffices(city.Ref)
-        console.log(this.personalData)
         this.showDropdawn = false
       },
       hideDropDawn () {
         this.showDropdawn = false
       },
       async sendEmailHandler () {
-        console.log(this.personalData)
+        this.checkName()
+        this.checkPhone()
+        this.checkCity()
+        this.checkPostOffice()
+
+        if (this.nameError === true || this.phoneError === true || this.cityError === true || this.postOfficeError === true) {
+          return
+        }
+
+
         const dataForMail = {
           ...this.personalData,
           basket: '',
@@ -254,16 +271,12 @@ import buyPopUp from '../components/buyPopUp'
           dataForMail.basket += `${item.title}, кількість кг: ${item.quantity}, ціна за один кг: ${item.price} <br>`
         }
 
-        console.log(dataForMail.basket)
-
-        console.log('start sending...')
+        this.successPopUp = true
         try {
           await this.sendEmail(dataForMail)
         } catch (e) {
           console.log(e)
         }
-        console.log('sent.')
-        this.successPopUp = true
         this.$store.commit('cleanBasket')
       },
       sendEmail (data) {
@@ -274,6 +287,38 @@ import buyPopUp from '../components/buyPopUp'
             console.log('bingo!')
           }
         })
+      },
+      checkName () {
+        if(this.personalData.name.length < 1) {
+          this.nameError = true
+        } else {
+          this.nameError = false
+        }
+      },
+      checkPhone () {
+        if (this.personalData.phone.length !== 19 || this.personalData.phone[5] !== '0')  {
+          this.phoneError = true
+        } else {
+          this.phoneError = false
+        }
+      },
+      checkCity () {
+        const idx = this.NavaPoshtaItems.findIndex(c => c.Description.toLowerCase() === this.currentCity.toLowerCase())
+        if (idx === -1) {
+          this.cityError = true
+        } else {
+          if (this.NovaPoshtaPostOffices.length === 0) {
+            this.getPostOffices(this.NavaPoshtaItems[idx].Ref)
+          }
+          this.cityError = false
+        }
+      },
+      checkPostOffice () {
+        if (this.personalData.postOffice === 'Віділення Нової пошти' || '') {
+          this.postOfficeError = true
+        } else {
+          this.postOfficeError = false
+        }
       }
     },
 
@@ -508,16 +553,28 @@ import buyPopUp from '../components/buyPopUp'
         outline: none;
       }
     }
+
+    .error-handler {
+      color: #FB6868;
+      font-size: 12px;
+      float: left;
+      padding-top: 3px;
+    }
+
+    .postOffice-error {
+      padding-left: 12px;
+    }
   }
+
 
 
 
   @media all and (max-width: 599px) {
     .quantity {
-      width: 40% !important;
+      width: 43% !important;
     }
     .quantity-btn {
-      padding: 8px !important;
+      padding: 5px !important;
     }
 
     .total-price {
@@ -530,11 +587,21 @@ import buyPopUp from '../components/buyPopUp'
     .form-title {
       text-align: center;
     }
+    .buy-form {
+      padding: 0 25px;
+    }
+    .error-handler {
+      font-size: 11px;
+    }
   }
 
   @media all and (max-width: 340px) {
     .quantity-btn {
       padding: 4px!important;
+    }
+
+    .error-handler {
+      font-size: 10px;
     }
   }
 
