@@ -50,6 +50,41 @@ export default {
         description: 'рослина для боротьби із бур’янами та удобрювання ґрунту, вирощування на зелений корм та сіно.',
         price: 20,
         img: require('../assets/images/jpeg/girczucia.jpg')
+      },
+      {
+        id: 't1g563g9',
+        title: 'НАСІННЯ СУДАНКИ',
+        description: 'вирощування на зелений корм, сіно.',
+        price: 45,
+        img: require('../assets/images/jpeg/girczucia.jpg')
+      },
+      {
+        id: 'l4f934t0',
+        title: 'НАСІННЯ ГРЕЧКИ НА СИДЕРАТ',
+        description: 'вирощування на зелений корм.',
+        price: 45,
+        img: require('../assets/images/jpeg/girczucia.jpg')
+      },
+      {
+        id: 'k1a111a6',
+        title: 'НАСІННЯ ТИМОФІЇВКА',
+        description: 'вирощування на зелений корм, сіно.',
+        price: 45,
+        img: require('../assets/images/jpeg/girczucia.jpg')
+      },
+      {
+        id: 'k1a111a6',
+        title: 'НАСІННЯ ЛЮПИНУ НА СИДЕРАТ',
+        description: 'сидерація, медонос, зелений корм.',
+        price: 45,
+        img: require('../assets/images/jpeg/girczucia.jpg')
+      },
+      {
+        id: 'l2l212l9',
+        title: 'НАСІННЯ ФАЦЕЛІЇ ',
+        description: 'сидерат, медонос.',
+        price: 45,
+        img: require('../assets/images/jpeg/girczucia.jpg')
       }
 
     ]
