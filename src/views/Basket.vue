@@ -130,8 +130,8 @@ import buyPopUp from '../components/buyPopUp'
         nameError: null,
         phoneError: null,
         cityError: null,
-        postOfficeError: null
-
+        postOfficeError: null,
+        temp: false
       }
     },
     directives: {
