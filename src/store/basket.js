@@ -37,6 +37,10 @@ export default {
         state.basketItems[idx].quantity--
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
       }
+    },
+    cleanBasket (state) {
+      state.basketItems = []
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.basketItems))
     }
 
   },

@@ -43,46 +43,51 @@
 
     <h2 class="form-title">Оформлення замовлення</h2>
 
-    <form action="../../server/mail.php" method="post" >
-      <div class="buy-form">
-
-        <div class="form-item input-item">
-          <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name" required>
-          <label>ПІБ</label>
-        </div>
-        <div class="form-item input-item">
-          <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (###) ###-##-##'" required>
-          <label>Телефон</label>
-        </div>
-        <div class="form-item input-item" v-click-outside="hideDropDawn">
-          <input type="search" name="delivery" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true"  required >
-          <label>Місто/село</label>
-          <div class="dropdown-items" v-if="showDropdawn">
-            <ul class="search-block">
-              <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
-                {{ item.Description }}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <select name="postOffice" class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}" required>
-          <option disabled :selected="NovaPoshtaPostOffices.length === 0">Віділення Нової пошти</option>
-          <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
-        </select>
-
-        <input type="text" name="basket" :value="basketItems" hidden>
-        <input type="text" name="totalPrice" :value="totalPrice" hidden>
-
-        <div class="goods-btn-wrapper">
-          <button type="submit" class="goods-btn">Купити</button>
-        </div>
 
 
+    <div class="buy-form">
+      <div class="form-item input-item">
+        <input class="name-input" :class="{ used: personalData.name.length }" type="text" name="name" v-model="personalData.name" required>
+        <label>ПІБ</label>
       </div>
-    </form>
+      <div class="form-item input-item">
+        <input :class="{ used: personalData.phone.length }" type="text" name="phone" v-model="personalData.phone" v-mask="'+38 (###) ###-##-##'" required>
+        <label>Телефон</label>
+      </div>
+      <div class="form-item input-item" v-click-outside="hideDropDawn">
+        <input type="search" name="delivery" :class="{ used: currentCity.length }" v-model="currentCity" @focus="showDropdawn = true"  required >
+        <label>Місто/село</label>
+        <div class="dropdown-items" v-if="showDropdawn">
+          <ul class="search-block">
+            <li v-for="(item, i) of sortedCity" :key="i" class="cityItem" @click="selectAction(item)" >
+              {{ item.Description }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <select name="postOffice" v-model="personalData.postOffice" class="selectPostOffice" :disabled="NovaPoshtaPostOffices.length < 1" :class="{'disabled-color': NovaPoshtaPostOffices.length < 1}" required>
+        <option disabled :selected="NovaPoshtaPostOffices.length === 0">Віділення Нової пошти</option>
+        <option v-for="(item, i) in NovaPoshtaPostOffices" :key="i">{{ item.Description }}</option>
+      </select>
+
+      <input type="text" name="basket" :value="basketItems" hidden>
+      <input type="text" name="totalPrice" :value="totalPrice" hidden>
+
+      <div class="goods-btn-wrapper">
+        <button class="goods-btn" @click="sendEmailHandler">Купити</button>
+      </div>
 
 
+    </div>
 
+    <buyPopUp
+        v-if="successPopUp"
+        @cancel="goToHome"
+        @confirm="goToGoods"
+        confirmMessage="Дякуємо за покупку, ми вам зателефонуємо!"
+        buttonCancelText="Перейти на головну"
+        buttonSuccess="Продовжити покупки"
+    />
 
   </section>
 </template>
@@ -90,13 +95,20 @@
 <script>
 import ApiNovaPochta from 'yz-react-deliveri-newpochta'
 import ClickOutside from 'vue-click-outside'
+import axios from 'axios'
+import querystring from 'query-string'
+import buyPopUp from '../components/buyPopUp'
 
 
 
   export default {
     name: "Basket",
+    components: {
+      buyPopUp
+    },
     data () {
       return {
+        successPopUp: false,
         totalPrice: 0,
         NavaPoshtaItems: [],
         currentCity: '',
@@ -106,17 +118,18 @@ import ClickOutside from 'vue-click-outside'
           name: '',
           phone: '',
           city: '',
-          postOffice: ''
+          postOffice: '',
+
         }
       }
     },
     directives: {
-      ClickOutside,
-
+      ClickOutside
     },
     created () {
       this.totalPriceCount()
       this.getDataFromNPApi()
+      console.log(this.basketItems)
     },
     mounted () {
       window.scrollTo({
@@ -144,7 +157,6 @@ import ClickOutside from 'vue-click-outside'
     },
     watch: {
       basketItems () {
-        console.log('bum')
         this.totalPriceCount()
       },
       currentCity () {
@@ -154,6 +166,12 @@ import ClickOutside from 'vue-click-outside'
       }
     },
     methods: {
+      goToGoods () {
+        this.$router.push('/goods')
+      },
+      goToHome () {
+        this.$router.push('/')
+      },
       getDataFromNPApi () {
         const apiKey = 'e2466eeb335cb4638e194df59b42dc88'
         const cb = (res) => {
@@ -223,7 +241,39 @@ import ClickOutside from 'vue-click-outside'
       },
       hideDropDawn () {
         this.showDropdawn = false
+      },
+      async sendEmailHandler () {
+        console.log(this.personalData)
+        const dataForMail = {
+          ...this.personalData,
+          basket: '',
+          totalPrice: this.totalPrice
+        }
 
+        for(let item of this.basketItems) {
+          dataForMail.basket += `${item.title}, кількість кг: ${item.quantity}, ціна за один кг: ${item.price} <br>`
+        }
+
+        console.log(dataForMail.basket)
+
+        console.log('start sending...')
+        try {
+          await this.sendEmail(dataForMail)
+        } catch (e) {
+          console.log(e)
+        }
+        console.log('sent.')
+        this.successPopUp = true
+        this.$store.commit('cleanBasket')
+      },
+      sendEmail (data) {
+        return axios.post('http://7-sotok.com.ua/server/mail.php', querystring.stringify(data))
+        .then(res => {
+          console.log('result', res)
+          if(res.result === 'succes') {
+            console.log('bingo!')
+          }
+        })
       }
     },
 

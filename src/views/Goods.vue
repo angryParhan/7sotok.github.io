@@ -78,6 +78,7 @@ import buyPopUp from '../components/buyPopUp'
   .container {
     max-width: 1270px;
     margin: 0 auto;
+    padding: 0 20px;
   }
 
   .goods-block {

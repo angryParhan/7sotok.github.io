@@ -6,8 +6,8 @@
           <h2 class="message">{{ confirmMessage }}</h2>
           <img src="../assets/images/svg/addToBasket.svg" alt="" class="successImg">
           <div class="buttons__block">
-            <p class="btn btn_cancel" @click="$emit('cancel')">Продовжити вибір товарів</p>
-            <p class="btn btn_confirm" @click="$emit('confirm')">Оформити замовлення</p>
+            <p class="btn btn_cancel" @click="$emit('cancel')">{{ buttonCancelText }}</p>
+            <p class="btn btn_confirm" @click="$emit('confirm')">{{ buttonSuccess }}</p>
           </div>
         </div>
       </div>
@@ -22,6 +22,14 @@
       confirmMessage: {
         type: String,
         default: 'Дякуємо, товар додано у корзину'
+      },
+      buttonCancelText: {
+        type: String,
+        default: 'Продовжити вибір товарів'
+      },
+      buttonSuccess: {
+        type: String,
+        default: 'Оформити замовлення'
       }
     }
   }

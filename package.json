@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@codekraft-studio/vue-animated": "^0.1.5",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "normalize.css": "^8.0.1",
+    "query-string": "^6.12.1",
     "v-mask": "^2.2.1",
     "vue": "^2.6.11",
     "vue-click-outside": "^1.1.0",
