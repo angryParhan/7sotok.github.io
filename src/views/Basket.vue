@@ -21,7 +21,7 @@
         <table class="table table-head">
           <tr v-for="(item, i) in basketItems" :key="i">
             <td class="title">
-              {{ item.title }}
+              <router-link :to="'/product/' + item.id" class="link">{{ item.title }}</router-link>
             </td>
             <td class="quantity">
               <span class="minus-quantity quantity-btn" @click="minusAction(item.id)">-</span>
@@ -327,6 +327,10 @@ import buyPopUp from '../components/buyPopUp'
 
 <style scoped lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
+
+  .link {
+    color: #0288D1;
+  }
 
   input {
     border: none;
