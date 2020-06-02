@@ -8,14 +8,17 @@
             :key="i"
 
         >
-          <img :src="item.img" alt="" class="product-title-img">
+          <router-link :to="'/product/' + item.id" tag="picture">
+            <img :src="item.img" alt="" class="product-title-img">
+          </router-link>
+
           <p class="title">{{ item.title }}</p>
           <p class="description"><span>Призначення:</span> {{ item.description }}</p>
 
           <div class="btn-price-wrapper">
             <p class="price"><span class="helper"></span>Ціна: {{ item.price }} грн/кг</p>
             <div class="btns">
-              <p class="btn btn-more">Детальніше</p>
+              <router-link :to="'/product/' + item.id" tag="p" class="btn btn-more">Детальніше</router-link>
               <p class="btn buy-btn" @click="buyAction(item)">Купити</p>
             </div>
           </div>
@@ -108,6 +111,7 @@ import buyPopUp from '../components/buyPopUp'
     }
 
     .product-title-img {
+      cursor: pointer;
       border-radius: inherit;
       height: 230px;
       width: 100%;
