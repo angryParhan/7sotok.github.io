@@ -21,7 +21,7 @@
             </router-link>
           </div>
           <a href="tel:+380501909337" class="callback-phone" @click="sendDataToGoogleAnalitics">+38 (050) 190-93-37 <span class="phone__description">Зателефонувати</span></a>
-          <a href="tel:+380994007301" @click="sendDataToGoogleAnalitics"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
+          <a href="tel:+380501909337" @click="sendDataToGoogleAnalitics"><img src="../assets/images/svg/phone-icon.svg" alt="" class="navbar__mobile__callback"></a>
           <img src="../assets/images/svg/navBar-mobile.svg" alt="" class="navbar__mobile" @click="showXSmenu">
         </div>
       </nav>
