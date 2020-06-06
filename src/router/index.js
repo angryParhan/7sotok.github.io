@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Goods from '../views/Goods'
 import Basket from '../views/Basket'
 import ProductPage from '../views/ProductPage'
+import aboutUs from '../views/About'
 
 Vue.use(VueRouter)
 
@@ -25,10 +26,16 @@ Vue.use(VueRouter)
   },
   {
     path: '/product/:id',
-    nome: 'productPage',
+    name: 'productPage',
     props: true,
     component: ProductPage
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: aboutUs
   }
+
 
 ]
 

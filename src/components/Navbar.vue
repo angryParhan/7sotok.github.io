@@ -9,7 +9,6 @@
               <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
               <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
               <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
-              <router-link to="/delivery-info" tag="li" :class="{active: activeTab === 'Delivery'}">Оплата і доставка</router-link>
               <router-link to="/contacts" tag="li" class="last" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
             </ul>
           </div>
@@ -39,7 +38,6 @@
             <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
             <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
             <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
-            <router-link to="/delivery-info" tag="li" :class="{active: activeTab === 'Delivery'}">Оплата і доставка</router-link>
             <router-link to="/contacts" tag="li" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
           </ul>
         </div>
