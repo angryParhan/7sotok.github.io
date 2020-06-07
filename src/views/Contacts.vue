@@ -29,7 +29,7 @@
 
       </div>
       <div class="contact-item-map">
-        <div id="contact-map" class="contact-map"></div>
+        <div id="contact-map" class="contact-map" style="z-index: 1"></div>
       </div>
 
     </div>
