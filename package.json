@@ -10,6 +10,7 @@
     "@codekraft-studio/vue-animated": "^0.1.5",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "leaflet": "^1.6.0",
     "normalize.css": "^8.0.1",
     "query-string": "^6.12.1",
     "swiper": "^5.4.1",

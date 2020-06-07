@@ -59,7 +59,6 @@
     },
     mounted () {
       this.activeTab = this.$router.currentRoute.name
-      console.log(this.busketItems)
 
     },
     computed: {
@@ -79,7 +78,6 @@
     },
     methods: {
       sendBasketEventToAnalitics () {
-        console.log('click')
         this.$gtag.event('click-navbar-basket-icon', {
           'event_category': 'basket-icon',
           'event_label': 'click',

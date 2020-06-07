@@ -12,7 +12,7 @@
             <img :src="item.img" alt="" class="product-title-img">
           </router-link>
 
-          <p class="title">{{ item.title }}</p>
+          <router-link tag="p" :to="'/product/' + item.id" class="title">{{ item.title }}</router-link>
           <p class="description"><span>Призначення:</span> {{ item.description }}</p>
 
           <div class="btn-price-wrapper">
@@ -46,9 +46,6 @@ import buyPopUp from '../components/buyPopUp'
       return {
         buyPopUpShow: false
       }
-    },
-    mounted () {
-      console.log('items', this.shopItems)
     },
     computed: {
       shopItems () {
@@ -151,8 +148,10 @@ import buyPopUp from '../components/buyPopUp'
 
     .btn-more {
 
+      background: rgba(0, 0, 0, 0.03);
+
       &:hover {
-        background: rgba(0, 0, 0, 0.03);
+        background: rgba(0, 0, 0, 0.07);
       }
     }
 
@@ -169,10 +168,15 @@ import buyPopUp from '../components/buyPopUp'
     }
 
     .title {
+      cursor: pointer;
       margin-bottom: 20px;
       font-size: 18px;
       font-weight: bold;
       padding-left: 10px;
+      &:hover {
+        color: #0288D1;
+        text-decoration: underline;
+      }
     }
 
     .description {

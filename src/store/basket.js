@@ -7,7 +7,6 @@ export default {
   mutations: {
     setState (state) {
       state.basketItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || [])
-      console.log('here')
     },
     addEllToBasket (state, payload) {
       const idx = state.basketItems.findIndex(c => c.id === payload.id)

@@ -140,7 +140,6 @@ import buyPopUp from '../components/buyPopUp'
     created () {
       this.totalPriceCount()
       this.getDataFromNPApi()
-      console.log(this.basketItems)
     },
     mounted () {
       window.scrollTo({
@@ -282,9 +281,8 @@ import buyPopUp from '../components/buyPopUp'
       sendEmail (data) {
         return axios.post('http://7-sotok.com.ua/server/mail.php', querystring.stringify(data))
         .then(res => {
-          console.log('result', res)
           if(res.result === 'succes') {
-            console.log('bingo!')
+            console.log('message sent!')
           }
         })
       },

@@ -5,6 +5,7 @@ import Goods from '../views/Goods'
 import Basket from '../views/Basket'
 import ProductPage from '../views/ProductPage'
 import aboutUs from '../views/About'
+import Contacts from '../views/Contacts'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ Vue.use(VueRouter)
     path: '/about',
     name: 'About',
     component: aboutUs
+  },
+  {
+    path: '/contacts',
+    name: 'Contacts',
+    component: Contacts
   }
 
 

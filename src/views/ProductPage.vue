@@ -149,7 +149,6 @@ import 'swiper/css/swiper.css'
         })
       },
       cutTitleForMobile (text) {
-        console.log(text.length, text)
         if (text.length > 17 && this.mobileCheck()) {
           text = text.substr(0, 17) + '...'
         }
