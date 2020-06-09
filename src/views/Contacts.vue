@@ -9,7 +9,7 @@
           </p>
 
           <p>
-            <a href="tel:+380501909337" class="callback-phone">+38 (050) 190-93-37</a>
+            <a href="tel:+380954136806" class="callback-phone">+38 (095) 413-68-06</a>
           </p>
 
           <p>
@@ -50,13 +50,13 @@
         maxZoom: 22,
         minZoom: 2,
         id: 'sim-sotok/ckb451ii212lq1imy0lpt6joa',
-        accessToken: 'pk.eyJ1Ijoic2ltLXNvdG9rIiwiYSI6ImNrYjQxYWxiazBlZGcycW85dHZvNjBqeDcifQ.v0WbdBSOiuyQYDpkhi8QLg',
+        accessToken: 'pk.eyJ1Ijoic2ltLXNvdG9rIiwiYSI6ImNrYjQxZWc1NDBrODgydnQ4aGFwNGwzeGoifQ.BIY6triXOayOwxHjt85lrQ',
         map: null
       }
     },
     mounted () {
 
-      this.map = L.map('contact-map', { attributionControl: false }).setView([50.743, 25.3424], 12)
+      this.map = L.map('contact-map', { attributionControl: false }).setView([50.733455, 25.296819], 12)
 
 
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -74,7 +74,7 @@
         popupAnchor: [0, -14],
       })
 
-      const marker = L.marker([50.743, 25.3424], {icon: icon}).bindPopup(`<p style="text-align: center">Ми знаходимося <br> тут!</p>`)
+      const marker = L.marker([50.733455, 25.296819], {icon: icon}).bindPopup(`<p style="text-align: center">Ми знаходимося <br> тут!</p>`)
       marker.on('click', (e) => {
         this.map.setView(e.latlng, 16)
       })
