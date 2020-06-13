@@ -31,17 +31,16 @@
               v-if="XSmenuDone"
         />
       </transition>
-      <Animated enter="slideInRight" leave="slideOutRight" duration="300">
-        <div class="nav__right-block-slide" v-if="XSmenu">
-          <img src="../assets/images/svg/close-btn.svg" class="close-btn" alt="" @click="closeMenu">
-          <ul>
-            <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
-            <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
-            <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
-            <router-link to="/contacts" tag="li" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
-          </ul>
-        </div>
-      </Animated>
+      <div class="nav__right-block-slide" :class="{activeXS: XSmenu, closeXs: !XSmenu}">
+        <img src="../assets/images/svg/close-btn.svg" class="close-btn" alt="" @click="closeMenu">
+        <ul>
+          <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
+          <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
+          <router-link to="/goods" tag="li" :class="{active: activeTab === 'Goods'}">Товари</router-link>
+          <router-link to="/contacts" tag="li" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
+        </ul>
+      </div>
+
     </header>
   </section>
 </template>
@@ -72,7 +71,7 @@
         if (this.XSmenu) {
           setTimeout(() => {
             this.closeMenu()
-          }, 100)
+          }, 300)
         }
       }
     },
@@ -100,11 +99,10 @@
         this.XSmenuDone = true
         this.XSmenu = true
       },
-      closeMenu () {
+      closeMenu (diration = 0) {
         this.XSmenu = false
-        setTimeout(() => {
-          this.XSmenuDone = false
-        }, 100)
+        this.XSmenuDone = false
+
       }
     }
   }
@@ -346,17 +344,18 @@
       z-index: 1;
       top: 0;
       left: 0;
+
     }
 
     .nav__right-block-slide {
-      z-index: 2;
+      z-index: 9999;
       position: fixed;
       top: 0;
       right: 0;
       background-color: #fff;
       height: 100vh;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.38);
-      width: 60%;
+      width: 0;
     }
 
     .nav__right-block-slide li  {
@@ -444,6 +443,17 @@
       left: -9px;
       z-index: -1;
     }
+  }
+
+  .activeXS {
+    width: 70%;
+    transition: all 0.25s linear;
+  }
+
+  .closeXs {
+    width: 0;
+    transition: all 0.2s linear;
+
   }
 
 

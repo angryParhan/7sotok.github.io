@@ -2,9 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueAnimated from '@codekraft-studio/vue-animated'
 import VueMask from 'v-mask'
 import VueGtag from 'vue-gtag'
+import VueFacebookPixel from 'vue-analytics-facebook-pixel'
 
 
 Vue.use(VueGtag, {
@@ -13,9 +13,13 @@ Vue.use(VueGtag, {
   pageTrackerScreenviewEnabled: true
 }, router)
 
+Vue.use(VueFacebookPixel)
+Vue.analytics.fbq.init('YOUR_FACEBOOK_CODE', {
+  em: 'user@mail.com'
+})
+
 
 Vue.use(VueMask)
-Vue.use(VueAnimated)
 
 import 'normalize.css'
 import '../src/assets/css-reset/reset.css'

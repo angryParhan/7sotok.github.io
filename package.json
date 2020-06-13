@@ -7,7 +7,6 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@codekraft-studio/vue-animated": "^0.1.5",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "leaflet": "^1.6.0",
@@ -16,6 +15,7 @@
     "swiper": "^5.4.1",
     "v-mask": "^2.2.1",
     "vue": "^2.6.11",
+    "vue-analytics-facebook-pixel": "^1.0.1",
     "vue-awesome-swiper": "^4.1.1",
     "vue-click-outside": "^1.1.0",
     "vue-gtag": "^1.6.2",
