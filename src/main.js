@@ -14,8 +14,12 @@ Vue.use(VueGtag, {
 }, router)
 
 Vue.use(VueFacebookPixel)
-Vue.analytics.fbq.init('YOUR_FACEBOOK_CODE', {
-  em: 'user@mail.com'
+Vue.analytics.fbq.init('654344018480734', {
+  em: 'voroshyk@icloud.com'
+})
+
+Vue.analytics.fbq.event('ViewContent', {
+  content_name: 'Really Fast Running Shoes'
 })
 
 
