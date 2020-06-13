@@ -349,6 +349,10 @@ import 'swiper/css/swiper.css'
 
   @media all and (max-width: 599px) {
     .product {
+      &__title {
+        font-size: 22px;
+        font-weight: 600;
+      }
       &__short-description {
         grid-template-columns: 1fr;
 
@@ -358,6 +362,27 @@ import 'swiper/css/swiper.css'
           }
 
         }
+      }
+    }
+
+    .btn-wrapper {
+
+      .btn {
+        padding: 7px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        border-radius: 2px;
+        font-size: 13px;
+        margin-top: 13px;
+      }
+
+      .btn-more {
+        padding: 10px 6px !important;
+
+      }
+
+      .btn-buy {
+        padding: 10px 9px !important;
       }
     }
   }
