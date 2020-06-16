@@ -453,7 +453,10 @@
   .closeXs {
     width: 0;
     transition: all 0.2s linear;
+    ul, img {
+      display: none;
 
+    }
   }
 
 
