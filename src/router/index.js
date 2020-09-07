@@ -6,10 +6,11 @@ import Basket from '../views/Basket'
 import ProductPage from '../views/ProductPage'
 import aboutUs from '../views/About'
 import Contacts from '../views/Contacts'
+import Categories from '../views/Categories'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -40,6 +41,11 @@ Vue.use(VueRouter)
     path: '/contacts',
     name: 'Contacts',
     component: Contacts
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: Categories
   }
 
 
