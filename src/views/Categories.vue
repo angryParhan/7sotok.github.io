@@ -216,7 +216,7 @@
 
     &__blocks {
       margin-left: 109px;
-      width: 100%;
+      max-width: 100%;
       display: grid;
       grid-template-columns: repeat(3, 200px);
       grid-gap: 10%;
