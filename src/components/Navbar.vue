@@ -8,7 +8,7 @@
             <ul class="items-wrapper">
               <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
               <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
-              <router-link to="/categories" tag="li" :class="{active: activeTab === 'Goods' || activeTab === 'Categories'}">Товари</router-link>
+              <router-link to="/categories?mode=main_categories" tag="li" :class="{active: activeTab === 'Goods' || activeTab === 'Categories'}">Товари</router-link>
               <router-link to="/contacts" tag="li" class="last" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
             </ul>
           </div>
@@ -36,7 +36,7 @@
         <ul>
           <router-link to="/" tag="li" :class="{active: activeTab === 'Home'}">Головна</router-link>
           <router-link to="/about" tag="li" :class="{active: activeTab === 'About'}">Про нас</router-link>
-          <router-link to="/categories" tag="li" :class="{active: activeTab === 'Goods' || activeTab === 'Categories'}">Товари</router-link>
+          <router-link to="/categories?mode=main_categories" tag="li" :class="{active: activeTab === 'Goods' || activeTab === 'Categories'}">Товари</router-link>
           <router-link to="/contacts" tag="li" :class="{active: activeTab === 'Contacts'}">Контакти</router-link>
         </ul>
       </div>

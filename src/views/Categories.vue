@@ -1,13 +1,55 @@
 <template>
-  <section class="container categories">
-    <div
-        v-for="(item, i) in categoriesItems"
-        :key="i"
-        class="categories__items"
-        :style="{ backgroundImage: `url(${item.img})` }"
-    >
-      <h2>{{ item.title }}</h2>
-    </div>
+  <section class="container">
+
+    <template v-if="showMainCategories">
+      <div class="categories">
+        <div
+            v-for="(item, i) in categoriesItems"
+            :key="i"
+            class="categories__items"
+            :style="{ backgroundImage: `url(${item.img})` }"
+            @click="changeCategories(item.value)"
+        >
+          <h2>{{ item.title }}</h2>
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="sub-categories">
+        <div class="sub-categories__list">
+          <h3>Категорії</h3>
+          <ul>
+
+            <li
+                v-for="seed in categoriesItems"
+                :key="seed.title"
+                class="categories__sub-items"
+                @click="filterCategories(seed.value)"
+                :class="{'categories__sub-items-active' : seed.value === currentCategory}"
+            >
+              <svg class="list-circle" height="16" width="16" :class="{'list-circle-active' : seed.value === currentCategory}">
+                <circle cx="8" cy="8" r="6" stroke="#6cc164" stroke-width="2" fill="#ffffff" />
+              </svg>
+              <span>{{ seed.title }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="sub-categories__blocks">
+          <div
+              v-for="(subCategory, i) in subCategories"
+              :key="i"
+              class="sub-categories__item"
+              :style="{ backgroundImage: `url(${subCategory.img})` }"
+          >
+            <h4>{{ subCategory.title }}</h4>
+          </div>
+
+        </div>
+
+      </div>
+
+    </template>
+
   </section>
 </template>
 
@@ -16,16 +58,44 @@
     name: "Categories",
     data () {
       return {
-
+        showMainCategories: true
       }
     },
     computed: {
       categoriesItems () {
         return this.$store.getters.getCategories
+      },
+      subCategories () {
+        return this.$store.getters.getFilteredSubCategoryList
+      },
+      currentCategory () {
+        return this.$store.getters.getCurrentCategory
       }
     },
-    mounted () {
+    watch: {
+      '$route.query.mode': {
+        handler (nv) {
+          this.checkQuery(nv)
+        }
+      }
+    },
+    created () {
+      console.log(this.$route.query.mode)
       console.log('cat', this.categoriesItems)
+      this.checkQuery(this.$route.query.mode)
+    },
+    methods: {
+      checkQuery (value) {
+        this.showMainCategories = value === 'main_categories'
+      },
+      async changeCategories (id) {
+        await this.$store.commit('setCurrentCategory', id)
+        console.log(this.currentCategory, this.subCategories)
+        this.$router.push({ path: '/categories', query: { mode: 'sub_categories' } })
+      },
+      filterCategories (id) {
+        this.$store.commit('setCurrentCategory', id)
+      }
     }
 
   }
@@ -87,8 +157,88 @@
         font-weight: bold;
         font-size: 25px;
       }
+    }
 
+    &__sub-items {
+      margin-bottom: 5px;
+      cursor: pointer;
 
+      &-active {
+        color: #6cc164;
+      }
+    }
+  }
+
+  .sub-categories {
+    padding: 50px 0;
+    &__list {
+      position: fixed;
+      h3 {
+        font-size: 30px;
+        font-weight: bold;
+        color: #22283D;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        li {
+          position: relative;
+          padding-left: 45px;
+          font-size: 25px;
+          margin-bottom: 25px;
+          user-select: none;
+
+          &:hover {
+            circle {
+              fill: #6cc164;
+            }
+            color: #6cc164;
+          }
+          .list-circle {
+            position: absolute;
+            left: 13px;
+            top: 5px;
+
+            &-active {
+              circle {
+                fill: #6cc164;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &__blocks {
+      margin-left: 109px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 200px);
+      grid-gap: 10%;
+      font-family: 'IBM Plex Sans', sans-serif;
+      justify-content: center;
+    }
+
+    &__item {
+      width: 200px;
+      height: 240px;
+      background-repeat: no-repeat;
+      background-size: 200px 200px;
+      cursor: pointer;
+      border: 3px solid #ffffff;
+      border-radius: 15px;
+      text-align: center;
+      position: relative;
+
+      h4 {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+      }
+
+      &:hover {
+        border: 3px solid #6cc164;
+      }
     }
   }
 
