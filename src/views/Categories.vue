@@ -40,6 +40,7 @@
               :key="i"
               class="sub-categories__item"
               :style="{ backgroundImage: `url(${subCategory.img})` }"
+              @click="goToProducts(subCategory.value)"
           >
             <h4>{{ subCategory.title }}</h4>
           </div>
@@ -95,6 +96,9 @@
       },
       filterCategories (id) {
         this.$store.commit('setCurrentCategory', id)
+      },
+      goToProducts (id) {
+        this.$router.push({name: 'Goods', query: {sort_value: id}})
       }
     }
 
@@ -174,7 +178,7 @@
     &__list {
       position: fixed;
       h3 {
-        font-size: 30px;
+        font-size: 25px;
         font-weight: bold;
         color: #22283D;
         margin-bottom: 10px;
@@ -242,6 +246,22 @@
     }
   }
 
+
+  @media all and (max-width: 1060px) {
+    .sub-categories {
+      &__list {
+        display: none;
+      }
+
+      &__blocks {
+        margin-left: 0;
+      }
+    }
+
+
+  }
+
+
   @media all and (max-width: 1200px) {
     .categories {
       grid-template-columns: repeat(3, 280px);
@@ -254,15 +274,39 @@
     .categories {
       grid-template-columns: repeat(2, 280px);
       justify-content: center;
+    }
 
+    .sub-categories {
+      &__blocks {
+        grid-template-columns: repeat(2, 200px);
+      }
+    }
+  }
+
+  @media all and (max-width:360px) {
+    .sub-categories {
+      &__blocks {
+        grid-template-columns: repeat(1, 200px);
+      }
     }
   }
 
   @media all and (max-width: 599px) {
     .categories {
-      grid-template-columns: repeat(1, 280px);
+      grid-template-columns: repeat(1, 250px);
       justify-content: center;
 
+    }
+    .sub-categories {
+      &__blocks {
+        grid-gap: 2%;
+      }
+
+      &__item {
+        &:hover {
+          border: 3px solid transparent;
+        }
+      }
     }
   }
 

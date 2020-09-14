@@ -4,7 +4,7 @@
       <div class="goods-block__seeds-wrapper">
         <div
             class="goods-block__item-card"
-            v-for="(item, i) in shopItems"
+            v-for="(item, i) in filteredShopItems"
             :key="i"
 
         >
@@ -44,12 +44,22 @@ import buyPopUp from '../components/buyPopUp'
     },
     data () {
       return {
-        buyPopUpShow: false
+        buyPopUpShow: false,
+        sortValue: 'all'
       }
     },
     computed: {
       shopItems () {
         return this.$store.getters.getShopItems
+      },
+      filteredShopItems () {
+        return this.sortValue === 'all' ? this.shopItems : this.shopItems.filter(el => el.categories.includes(this.sortValue))
+      }
+    },
+    created () {
+      console.log(this.$route.query.sort_value)
+      if (this.$route.query.sort_value) {
+        this.sortValue = this.$route.query.sort_value
       }
     },
     methods: {
