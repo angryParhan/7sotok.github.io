@@ -44,6 +44,7 @@
           >
             <h4>{{ subCategory.title }}</h4>
           </div>
+          <div v-if="subCategories.length === 0" class="sub-categories">Вибачте, товарів данної категорії немає у наявності<br><router-link to="/categories?mode=main_categories">усі категорії</router-link></div>
 
         </div>
 

@@ -24,6 +24,8 @@
           </div>
 
         </div>
+        <div v-if="filteredShopItems.length === 0" class="sub-categories">Вибачте, товарів данної категорії немає у наявності<br><router-link to="/categories?mode=main_categories">усі категорії</router-link></div>
+
       </div>
     </div>
     <buyPopUp
